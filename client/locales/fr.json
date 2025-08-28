@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "menu": "Menu",
+    "offers": "Offres",
+    "about": "À Propos",
+    "contact": "Contact",
+    "cart": "Panier",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "account": "Mon Compte",
+    "admin": "Administration",
+    "backToHome": "Retour à l'accueil"
+  },
+  "offers": {
+    "title": "Offres Spéciales",
+    "subtitle": "Découvrez nos promotions exclusives et savourez l'authenticité marocaine à prix réduits",
+    "currentOffers": "Offres Actuelles",
+    "limitedTime": "Temps Limité",
+    "orderNow": "Commander Maintenant",
+    "saveUp": "Économisez jusqu'à",
+    "validUntil": "Valable jusqu'au",
+    "termsConditions": "Voir conditions",
+    "noOffers": "Aucune offre active pour le moment",
+    "checkBack": "Revenez bientôt pour découvrir nos nouvelles promotions !",
+    "comingSoon": "Nouvelles Offres Bientôt",
+    "newsletter": "Abonnez-vous à notre newsletter pour être le premier informé de nos offres exclusives"
+  },
+  "menu": {
+    "title": "Menu",
+    "subtitle": "Découvrez notre authentique cuisine marocaine, préparée selon les traditions familiales transmises de génération en génération.",
+    "categories": "Nos Catégories",
+    "featuredDishes": "Nos Spécialités du Jour",
+    "readyToOrder": "Prêt à Commander!",
+    "orderDescription": "Choisissez parmi notre large sélection de plats marocains authentiques, préparés avec amour et livrés rapidement",
+    "discoverOffers": "Découvrir les Offres Spéciales",
+    "contactUs": "Nous Contacter",
+    "orderNow": "Commander",
+    "exploreSection": "Découvrir les plats"
+  },
+  "home": {
+    "hero": {
+      "title": "Saveurs Authentiques du Maroc",
+      "subtitle": "Découvrez les délices traditionnels préparés avec amour par CasaNawal",
+      "cta": "Commander Maintenant"
+    },
+    "story": {
+      "title": "Notre Histoire",
+      "content": "CasaNawal est dirigé par Nawal, une femme marocaine mariée et mère de cinq enfants... une livraison d'une qualité irréprochable."
+    },
+    "offers": {
+      "title": "Offres Spéciales",
+      "oneClick": "Commande en 1 clic"
+    },
+    "features": {
+      "authentic": "Cuisine Authentique",
+      "quality": "Qualité Premium",
+      "delivery": "Livraison Rapide"
+    }
+  },
+  "cart": {
+    "title": "Mon Panier",
+    "empty": "Votre panier est vide",
+    "total": "Total",
+    "checkout": "Passer Commande",
+    "continue": "Continuer les Achats"
+  },
+  "checkout": {
+    "title": "Finaliser la Commande",
+    "delivery": "Adresse de Livraison",
+    "payment": "Mode de Paiement",
+    "card": "Carte Bancaire",
+    "split": "Paiement Fractionné (50% + 50%)",
+    "confirm": "Confirmer la Commande"
+  },
+  "about": {
+    "breadcrumbLabel": "Fil d'Ariane",
+    "backHome": "Retour à l'accueil",
+    "title": "À Propos",
+    "intro": "CasaNawal est dirigé par Nawal, une femme marocaine mariée et mère de cinq enfants... une livraison d'une qualité irréprochable.",
+    "moreSoon": "Plus de détails sur l'histoire de CasaNawal et la philosophie culinaire de Nawal seront bientôt disponibles.",
+    "ctaLabel": "Découvrir nos Plats",
+    "imageAlt": "Portrait de Nawal en cuisine",
+    "values": {
+      "authenticity": "Authenticité",
+      "authenticityDesc": "Recettes traditionnelles transmises de génération en génération",
+      "quality": "Qualité",
+      "qualityDesc": "Ingrédients frais et sélectionnés avec soin",
+      "passion": "Passion",
+      "passionDesc": "Amour de la cuisine marocaine dans chaque plat"
+    },
+    "journey": {
+      "title": "Son Parcours",
+      "timeline": "Une histoire de passion culinaire qui commence dans la tradition familiale marocaine"
+    }
+  },
+  "common": {
+    "add": "Ajouter",
+    "remove": "Supprimer",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  }
+}
