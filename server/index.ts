@@ -59,6 +59,7 @@ import {
 
 // Database connection (imported only for health checks)
 import { db } from "./database/connection";
+import { neonHealthCheck } from "./lib/neon-data-api";
 
 const app = express();
 
@@ -79,6 +80,14 @@ const testDatabaseConnection = async () => {
 
 // Initialize database connection (non-blocking)
 setImmediate(testDatabaseConnection);
+
+// Optional: Neon Data API health check (non-blocking)
+setImmediate(async () => {
+  if (process.env.NEON_DATA_API_BASE) {
+    const ok = await neonHealthCheck();
+    console.log(ok ? '✅ Neon Data API reachable' : '⚠️ Neon Data API not reachable');
+  }
+});
 
 // ===== PUBLIC ROUTES =====
 app.get("/api/products", getPublicProducts);
