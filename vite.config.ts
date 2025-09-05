@@ -1,5 +1,5 @@
 import { defineConfig, Plugin } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 // IMPORTANT: Avoid importing the server during build to prevent DB side-effects
 // We'll dynamically import inside the dev-only plugin instead
 import { 
