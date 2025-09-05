@@ -119,8 +119,13 @@
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.7.0",
     "typescript": "^5.5.3",
-    "vaul": "^0.9.3",
-    "vite": "^5.4.19"
+    "vaul": "^0.9.3"
     
+  },
+  "dependencies": {
+    "vite": "^5.4.19",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.5.3",
+    "tsx": "^4.7.0"
   }
 }
