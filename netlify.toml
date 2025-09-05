@@ -1,11 +1,16 @@
 [build]
   command = "npm run build:client"
   publish = "dist/spa"
+  image = "ubuntu-24.04"
 
 # Build environment
 [build.environment]
   ROLLUP_SKIP_NATIVE = "true"
   NODE_VERSION = "22.19.0"
+  VITE_API_BASE = "https://srv-d2th13ggjchc739s4vmg.onrender.com/api"
+  NPM_FLAGS = "--prefer-offline --no-audit --legacy-peer-deps"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 # Optional: single-page app routing
 [[redirects]]
