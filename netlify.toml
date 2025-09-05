@@ -2,6 +2,11 @@
   command = "npm run build:client"
   publish = "dist/spa"
 
+# Build environment
+[build.environment]
+  ROLLUP_SKIP_NATIVE = "true"
+  NODE_VERSION = "22.19.0"
+
 # Optional: single-page app routing
 [[redirects]]
   from = "/*"
