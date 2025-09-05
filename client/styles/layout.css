@@ -1,0 +1,15 @@
+/* CasaNawal Layout Styles - Modular Structure */
+
+/* Import all layout modules */
+@import './layout-base.css';
+@import './layout-admin.css';
+@import './layout-grid.css';
+@import './layout-components.css';
+
+/* 
+  Layout modules organization:
+  - layout-base.css: Core page layouts, containers, hero sections, spacing
+  - layout-admin.css: Admin-specific layouts (sidebar, navigation, main content)  
+  - layout-grid.css: Grid systems, responsive layouts, flex utilities, navigation
+  - layout-components.css: Cards, forms, tables, modals, loading/error states
+*/

@@ -1,0 +1,50 @@
+@layer components {
+  /* Grid & Flex Layout Components */
+  
+  /* Grid Layouts */
+  .grid-responsive {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .grid-2-cols {
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-2;
+  }
+
+  .grid-3-cols {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .grid-4-cols {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  /* Flex Layouts */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .flex-start {
+    @apply flex items-center justify-start;
+  }
+
+  .flex-end {
+    @apply flex items-center justify-end;
+  }
+
+  /* Navigation Layouts */
+  .nav-horizontal {
+    @apply flex items-center space-x-4;
+  }
+
+  .nav-vertical {
+    @apply flex flex-col space-y-2;
+  }
+
+  .nav-tabs {
+    @apply flex space-x-8 border-b border-border;
+  }
+}

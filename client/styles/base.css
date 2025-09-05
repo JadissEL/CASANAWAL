@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* CSS Compatibility Fixes */
+  html,
+  :host {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%; /* Chrome 54+, Edge 79+, Firefox */
+  }
+
+  /* Backdrop filter compatibility */
+  .backdrop-blur-lg {
+    -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+    backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  }
+
+  /* User select compatibility */
+  [data-sonner-toast][data-swiped=true] {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    /* Moroccan Brand Theme */
+    --background: 32 40% 95%; /* Sable tint */
+    --foreground: 32 28% 9%; /* Nuit */
+
+    --card: 0 0% 100%;
+    --card-foreground: 32 28% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 32 28% 9%;
+
+    --primary: 14 55% 51%; /* Terracotta */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 100% 45%; /* Safran */
+    --secondary-foreground: 32 28% 9%;
+
+    --muted: 32 40% 88%; /* Sable light */
+    --muted-foreground: 32 28% 45%;
+
+    --accent: 180 78% 28%; /* Zellige */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 32 40% 85%;
+    --input: 32 40% 85%;
+    --ring: 14 55% 51%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 32 28% 9%; /* Nuit */
+    --foreground: 32 40% 95%;
+
+    --card: 32 28% 12%;
+    --card-foreground: 32 40% 95%;
+
+    --popover: 32 28% 12%;
+    --popover-foreground: 32 40% 95%;
+
+    --primary: 14 55% 51%; /* Terracotta */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 32 28% 15%;
+    --secondary-foreground: 32 40% 95%;
+
+    --muted: 32 28% 15%;
+    --muted-foreground: 32 28% 65%;
+
+    --accent: 180 78% 28%; /* Zellige */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 32 28% 15%;
+    --input: 32 28% 15%;
+    --ring: 14 55% 51%;
+
+    --sidebar-background: 32 28% 9%;
+    --sidebar-foreground: 32 40% 95%;
+    --sidebar-primary: 32 40% 95%;
+    --sidebar-primary-foreground: 32 28% 9%;
+    --sidebar-accent: 32 28% 15%;
+    --sidebar-accent-foreground: 32 40% 95%;
+    --sidebar-border: 32 28% 15%;
+    --sidebar-ring: 14 55% 51%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground));
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Selection styles */
+  ::selection {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+}

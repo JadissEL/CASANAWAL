@@ -1,0 +1,55 @@
+-- CasaNawal Database Schema - Optimized
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Admin Users
+CREATE TABLE admin_users (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), email VARCHAR(255) UNIQUE NOT NULL, password_hash VARCHAR(255) NOT NULL, full_name VARCHAR(255) NOT NULL, role VARCHAR(50) NOT NULL DEFAULT 'content_manager' CHECK (role IN ('super_admin', 'content_manager', 'order_manager')), permissions JSONB DEFAULT '{}', created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), last_login TIMESTAMP WITH TIME ZONE, is_active BOOLEAN DEFAULT true);
+
+-- Categories
+CREATE TABLE categories (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), slug VARCHAR(100) UNIQUE NOT NULL, sort_order INTEGER DEFAULT 0, icon VARCHAR(100), is_active BOOLEAN DEFAULT true, created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), created_by UUID REFERENCES admin_users(id));
+CREATE TABLE category_translations (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), category_id UUID NOT NULL REFERENCES categories(id) ON DELETE CASCADE, language_code VARCHAR(5) NOT NULL, name VARCHAR(255) NOT NULL, description TEXT, UNIQUE(category_id, language_code));
+
+-- Products
+CREATE TABLE products (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), category_id UUID NOT NULL REFERENCES categories(id), sku VARCHAR(100) UNIQUE NOT NULL, base_price DECIMAL(10,2) NOT NULL CHECK (base_price >= 0), is_vegetarian BOOLEAN DEFAULT false, is_spicy BOOLEAN DEFAULT false, rating DECIMAL(3,2) DEFAULT 0.0 CHECK (rating >= 0 AND rating <= 5), rating_count INTEGER DEFAULT 0, prep_time_minutes INTEGER NOT NULL CHECK (prep_time_minutes > 0), is_active BOOLEAN DEFAULT true, is_featured BOOLEAN DEFAULT false, sort_order INTEGER DEFAULT 0, created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), created_by UUID REFERENCES admin_users(id));
+CREATE TABLE product_translations (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE, language_code VARCHAR(5) NOT NULL, name VARCHAR(255) NOT NULL, description TEXT NOT NULL, preparation_time_text VARCHAR(100), UNIQUE(product_id, language_code));
+CREATE TABLE product_images (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE, image_url VARCHAR(500) NOT NULL, alt_text VARCHAR(255), sort_order INTEGER DEFAULT 0, is_primary BOOLEAN DEFAULT false);
+CREATE TABLE product_allergens (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE, allergen_code VARCHAR(50) NOT NULL, allergen_name_fr VARCHAR(100) NOT NULL, allergen_name_ar VARCHAR(100) NOT NULL, UNIQUE(product_id, allergen_code));
+CREATE TABLE portion_pricing (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE, persons INTEGER NOT NULL CHECK (persons > 0), discount_percentage DECIMAL(5,2) DEFAULT 0 CHECK (discount_percentage >= 0 AND discount_percentage <= 100), size_label_fr VARCHAR(100) NOT NULL, size_label_ar VARCHAR(100) NOT NULL, UNIQUE(product_id, persons));
+
+-- Clients
+CREATE TABLE clients (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), phone VARCHAR(20) UNIQUE NOT NULL, email VARCHAR(255), first_name VARCHAR(100), last_name VARCHAR(100), default_address TEXT, preferences JSONB DEFAULT '{}', total_orders INTEGER DEFAULT 0, total_spent DECIMAL(12,2) DEFAULT 0, created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), last_order_at TIMESTAMP WITH TIME ZONE, is_active BOOLEAN DEFAULT true);
+
+-- Orders
+CREATE TABLE orders (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), reference VARCHAR(50) UNIQUE NOT NULL, client_id UUID REFERENCES clients(id), status VARCHAR(50) NOT NULL DEFAULT 'pending_deposit' CHECK (status IN ('pending_deposit', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled')), subtotal DECIMAL(10,2) NOT NULL CHECK (subtotal >= 0), discount_amount DECIMAL(10,2) DEFAULT 0 CHECK (discount_amount >= 0), delivery_fee DECIMAL(10,2) DEFAULT 0 CHECK (delivery_fee >= 0), deposit_required DECIMAL(10,2) NOT NULL CHECK (deposit_required >= 0), deposit_paid DECIMAL(10,2) DEFAULT 0 CHECK (deposit_paid >= 0), total_amount DECIMAL(10,2) NOT NULL CHECK (total_amount >= 0), delivery_date DATE NOT NULL, delivery_slot VARCHAR(50) NOT NULL, delivery_address TEXT NOT NULL, notes TEXT, metadata JSONB DEFAULT '{}', created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());
+CREATE TABLE order_items (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE, product_id UUID REFERENCES products(id), product_name_snapshot VARCHAR(255) NOT NULL, quantity INTEGER NOT NULL CHECK (quantity > 0), portion_persons INTEGER NOT NULL CHECK (portion_persons > 0), unit_price DECIMAL(10,2) NOT NULL CHECK (unit_price >= 0), total_price DECIMAL(10,2) NOT NULL CHECK (total_price >= 0), product_details_snapshot JSONB DEFAULT '{}');
+CREATE TABLE order_status_history (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE, status VARCHAR(50) NOT NULL, comment TEXT, changed_by UUID REFERENCES admin_users(id), changed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());
+
+-- Payments
+CREATE TABLE payments (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE, payment_method VARCHAR(50) NOT NULL CHECK (payment_method IN ('bank_transfer', 'cash_deposit', 'card')), amount DECIMAL(10,2) NOT NULL CHECK (amount > 0), status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'verified', 'failed')), transaction_reference VARCHAR(255), proof_file_url VARCHAR(500), notes TEXT, verified_by UUID REFERENCES admin_users(id), created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), verified_at TIMESTAMP WITH TIME ZONE);
+CREATE TABLE receipts (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), order_id UUID NOT NULL REFERENCES orders(id), payment_id UUID REFERENCES payments(id), receipt_number VARCHAR(100) UNIQUE NOT NULL, receipt_data JSONB NOT NULL, generated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());
+
+-- Promo Codes
+CREATE TABLE promo_codes (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), code VARCHAR(50) UNIQUE NOT NULL, name_fr VARCHAR(255) NOT NULL, name_ar VARCHAR(255) NOT NULL, type VARCHAR(50) NOT NULL CHECK (type IN ('percentage', 'fixed_amount', 'free_delivery')), value DECIMAL(10,2) NOT NULL CHECK (value >= 0), min_order_amount DECIMAL(10,2) DEFAULT 0, usage_limit INTEGER, used_count INTEGER DEFAULT 0, valid_from DATE NOT NULL, valid_until DATE NOT NULL, is_active BOOLEAN DEFAULT true, created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), created_by UUID REFERENCES admin_users(id));
+
+-- Reviews
+CREATE TABLE reviews (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), product_id UUID NOT NULL REFERENCES products(id), client_id UUID REFERENCES clients(id), order_id UUID REFERENCES orders(id), rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5), comment TEXT, status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')), created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), moderated_by UUID REFERENCES admin_users(id), moderated_at TIMESTAMP WITH TIME ZONE);
+
+-- Notifications
+CREATE TABLE notifications (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), type VARCHAR(100) NOT NULL, title VARCHAR(255) NOT NULL, message TEXT NOT NULL, data JSONB DEFAULT '{}', recipient_id UUID REFERENCES admin_users(id), is_read BOOLEAN DEFAULT false, created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), read_at TIMESTAMP WITH TIME ZONE);
+
+-- Content & Settings
+CREATE TABLE content_translations (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), content_key VARCHAR(255) NOT NULL, language_code VARCHAR(5) NOT NULL, content_value TEXT NOT NULL, updated_by UUID REFERENCES admin_users(id), updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), UNIQUE(content_key, language_code));
+CREATE TABLE system_settings (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), setting_key VARCHAR(255) UNIQUE NOT NULL, setting_value JSONB NOT NULL, description TEXT, updated_by UUID REFERENCES admin_users(id), updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());
+
+-- Performance Indexes
+CREATE INDEX idx_categories_slug ON categories(slug); CREATE INDEX idx_categories_active ON categories(is_active); CREATE INDEX idx_products_category ON products(category_id); CREATE INDEX idx_products_active ON products(is_active); CREATE INDEX idx_products_featured ON products(is_featured); CREATE INDEX idx_products_sku ON products(sku); CREATE INDEX idx_clients_phone ON clients(phone); CREATE INDEX idx_clients_email ON clients(email); CREATE INDEX idx_orders_reference ON orders(reference); CREATE INDEX idx_orders_client ON orders(client_id); CREATE INDEX idx_orders_status ON orders(status); CREATE INDEX idx_orders_delivery_date ON orders(delivery_date); CREATE INDEX idx_order_items_order ON order_items(order_id); CREATE INDEX idx_order_items_product ON order_items(product_id); CREATE INDEX idx_payments_order ON payments(order_id); CREATE INDEX idx_payments_status ON payments(status); CREATE INDEX idx_reviews_product ON reviews(product_id); CREATE INDEX idx_reviews_client ON reviews(client_id); CREATE INDEX idx_notifications_recipient ON notifications(recipient_id); CREATE INDEX idx_notifications_unread ON notifications(is_read) WHERE NOT is_read;
+
+-- Auto-update triggers
+CREATE OR REPLACE FUNCTION update_updated_at_column() RETURNS TRIGGER AS $$ BEGIN NEW.updated_at = NOW(); RETURN NEW; END; $$ language 'plpgsql';
+CREATE TRIGGER update_categories_updated_at BEFORE UPDATE ON categories FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON orders FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+
+-- Order reference generation
+CREATE OR REPLACE FUNCTION generate_order_reference() RETURNS VARCHAR AS $$ DECLARE ref VARCHAR; date_part VARCHAR; random_part VARCHAR; BEGIN date_part := TO_CHAR(NOW(), 'YYYYMMDD'); random_part := UPPER(SUBSTRING(MD5(RANDOM()::TEXT) FROM 1 FOR 6)); ref := 'NAW-' || date_part || '-' || random_part; WHILE EXISTS(SELECT 1 FROM orders WHERE reference = ref) LOOP random_part := UPPER(SUBSTRING(MD5(RANDOM()::TEXT) FROM 1 FOR 6)); ref := 'NAW-' || date_part || '-' || random_part; END LOOP; RETURN ref; END; $$ language 'plpgsql';
+CREATE OR REPLACE FUNCTION set_order_reference() RETURNS TRIGGER AS $$ BEGIN IF NEW.reference IS NULL OR NEW.reference = '' THEN NEW.reference := generate_order_reference(); END IF; RETURN NEW; END; $$ language 'plpgsql';
+CREATE TRIGGER set_order_reference_trigger BEFORE INSERT ON orders FOR EACH ROW EXECUTE PROCEDURE set_order_reference();

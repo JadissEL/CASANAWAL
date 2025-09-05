@@ -1,0 +1,1 @@
+ALTER USER postgres PASSWORD 'XCDXCD963j3j+.1';

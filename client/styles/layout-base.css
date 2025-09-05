@@ -1,0 +1,70 @@
+@layer components {
+  /* Base Layout Components */
+  
+  /* Page Layout - Standard page container */
+  .page-layout {
+    @apply min-h-screen bg-background;
+  }
+
+  /* Page Content - Main content area */
+  .page-content {
+    @apply container mx-auto px-4 py-8 max-w-7xl;
+  }
+
+  /* Generic container for sections */
+  .container-standard {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Page Content Narrow - For forms and focused content */
+  .page-content-narrow {
+    @apply container mx-auto px-4 py-8 max-w-4xl;
+  }
+
+  /* Hero Section - Standard hero layout */
+  .hero-standard {
+    @apply relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10;
+  }
+
+  .hero-standard::before {
+    content: '';
+    @apply absolute inset-0 bg-[url('/images/moroccan-pattern.png')] opacity-5;
+    background-size: 200px;
+    background-repeat: repeat;
+  }
+
+  /* Responsive Layout */
+  .mobile-nav {
+    @apply lg:hidden;
+  }
+
+  .desktop-nav {
+    @apply hidden lg:flex;
+  }
+
+  /* Spacing Utilities */
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  .section-margin {
+    @apply my-12 sm:my-16 lg:my-20;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Sidebar Layouts */
+  .sidebar-layout {
+    @apply flex h-screen bg-background;
+  }
+
+  .sidebar-content {
+    @apply flex-1 flex flex-col overflow-hidden;
+  }
+
+  .sidebar-main {
+    @apply flex-1 overflow-y-auto;
+  }
+}
