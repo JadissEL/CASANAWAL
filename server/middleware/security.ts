@@ -15,7 +15,7 @@ interface SecurityEvent {
 const securityConfig = {
   rateLimitWindow: 15 * 60 * 1000,
   rateLimitMax: process.env.NODE_ENV === 'production' ? 100 : 1000,
-  corsOrigins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:8080'],
+  corsOrigins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:8080', 'https://casanawal.vercel.app'],
   enableSqlInjectionProtection: true,
   enableXssProtection: true,
   logSecurityEvents: true

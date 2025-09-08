@@ -1,7 +1,6 @@
 // Base API configuration
-// Use absolute API base in production (Vercel), fallback to relative in dev
-export const API_BASE_URL =
-  (import.meta as any).env?.VITE_API_BASE?.replace(/\/$/, '') || '/api';
+// Use relative API base for Vercel deployment
+export const API_BASE_URL = '/api';
 
 // Default fetch options
 export const defaultOptions: RequestInit = {
