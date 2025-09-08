@@ -10,11 +10,8 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist/spa',
+    outDir: '../dist/spa',
     emptyOutDir: true,
-    rollupOptions: {
-      external: [],
-    },
   },
   server: {
     port: 3000,
