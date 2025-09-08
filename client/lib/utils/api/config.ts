@@ -1,5 +1,5 @@
 // Base API configuration
-// Use absolute API base in production (e.g., from Netlify env), fallback to relative in dev
+// Use absolute API base in production (Vercel), fallback to relative in dev
 export const API_BASE_URL =
   (import.meta as any).env?.VITE_API_BASE?.replace(/\/$/, '') || '/api';
 

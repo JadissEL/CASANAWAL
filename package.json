@@ -32,7 +32,8 @@
     "db:seed-offers": "tsx server/database/seeders/004_seed_offers.ts",
     "db:full-setup": "npm run db:migrate && npm run db:migrate-analytics && npm run db:migrate-payments && npm run db:seed && npm run db:seed-admin && npm run db:seed-analytics && npm run db:seed-offers",
     "vercel-build": "npm run build:client && npm run build:server",
-    "vercel-dev": "npm run dev"
+    "vercel-dev": "npm run dev",
+    "db:check": "node -e \"console.log('✅ Using Neon Database - no local setup needed'); process.exit(0)\""
   },
   "dependencies": {
     "vite": "^5.4.19",

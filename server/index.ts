@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import serverless from 'serverless-http';
 
 // Core middleware
 import { authenticateToken, requireRole } from "./middleware/auth";
@@ -175,3 +176,6 @@ export const createServer = () => app;
 
 // Default export for backward compatibility
 export default app;
+
+// Export for Vercel
+export const handler = serverless(app);

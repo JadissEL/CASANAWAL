@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/**/*",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist/spa"
       }
     },
     {
-      "src": "server/**/*",
+      "src": "server/index.ts",
       "use": "@vercel/node"
     }
   ],
@@ -31,5 +31,10 @@
     "ADMIN_EMAIL": "elantaki.dijadiss@gmail.com",
     "ADMIN_PASSWORD": "XCDXCD963j3j+.1",
     "PORT": "3000"
+  },
+  "functions": {
+    "server/index.ts": {
+      "maxDuration": 30
+    }
   }
 }
