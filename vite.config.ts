@@ -1,63 +1,30 @@
-import { defineConfig, Plugin } from "vite";
-import react from "@vitejs/plugin-react";
-// IMPORTANT: Avoid importing the server during build to prevent DB side-effects
-// We'll dynamically import inside the dev-only plugin instead
-import { 
-  PATH_ALIASES, 
-  DEV_CONFIG, 
-  SECURITY_CONFIG, 
-  isDevelopment, 
-  isProduction 
-} from "./vite.config.shared";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
-// =====================================================
-// EXPRESS PLUGIN FOR DEVELOPMENT
-// =====================================================
-
-function expressPlugin(): Plugin {
-  return {
-    name: "express-plugin",
-    apply: "serve", // Only apply during development
-    async configureServer(server) {
-      const { createServer } = await import("./server");
-      const app = createServer();
-      server.middlewares.use(app);
-    },
-  };
-}
-
-// =====================================================
-// MAIN VITE CONFIGURATION
-// =====================================================
-
-export default defineConfig(({ mode }) => ({
-  // Development server configuration
-  server: {
-    host: DEV_CONFIG.HOST,
-    port: DEV_CONFIG.PORT,
-    fs: {
-      allow: SECURITY_CONFIG.ALLOWED_PATHS,
-      deny: SECURITY_CONFIG.DENIED_PATHS,
-    },
-  },
-
-  // Build configuration
-  build: {
-    outDir: DEV_CONFIG.CLIENT_OUT_DIR,
-    sourcemap: isDevelopment(mode),
-    minify: isProduction(mode),
-  },
-
-  // Plugins
-  plugins: [react(), expressPlugin()],
-
-  // Path resolution
+export default defineConfig({
+  plugins: [react()],
   resolve: {
-    alias: PATH_ALIASES,
+    alias: {
+      '@': path.resolve(__dirname, './client'),
+    },
   },
-
-  // Environment variables
-  define: {
-    __DEV__: isDevelopment(mode),
+  build: {
+    outDir: 'dist/spa',
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'client/index.html'),
+      },
+    },
   },
-}));
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+    },
+  },
+});
