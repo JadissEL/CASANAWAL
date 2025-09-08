@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "client/**/*",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/spa"
+      }
+    },
+    {
+      "src": "server/**/*",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "DATABASE_URL": "postgresql://neondb_owner:napi_ay0n1u1vujgf9559v0ml4kmeccf4pfqsxd9223r2jaqsg4aq9auewg4aq9auewg4psuz7vu3x@ep-sparkling-night-aglvdfcg-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require",
+    "JWT_SECRET": "casanawal_super_secret_jwt_key_2024_production",
+    "CORS_ORIGIN": "https://casanawal.vercel.app",
+    "ADMIN_EMAIL": "elantaki.dijadiss@gmail.com",
+    "ADMIN_PASSWORD": "XCDXCD963j3j+.1",
+    "PORT": "3000"
+  }
+}
