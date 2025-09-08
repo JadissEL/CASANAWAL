@@ -15,8 +15,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client",
-    "build:client": "cd client && vite build",
+    "build": "cd client && npm install && vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
     "format.fix": "prettier --write .",
@@ -30,7 +29,6 @@
     "db:seed-analytics": "tsx server/database/seeders/003_analytics_sample_data.ts",
     "db:seed-offers": "tsx server/database/seeders/004_seed_offers.ts",
     "db:full-setup": "npm run db:migrate && npm run db:migrate-analytics && npm run db:migrate-payments && npm run db:seed && npm run db:seed-admin && npm run db:seed-analytics && npm run db:seed-offers",
-    "vercel-build": "cd client && npm install && vite build",
     "vercel-dev": "npm run dev",
     "db:check": "node -e \"console.log('✅ Using Neon Database - no local setup needed'); process.exit(0)\""
   },
