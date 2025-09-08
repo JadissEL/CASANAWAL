@@ -4,7 +4,7 @@ import { Badge } from "./badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Plus, Star, Clock, Minus, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Product, ProductVariant, calculatePortionPrice } from "@shared/api";
+import { Product, ProductVariant, calculatePortionPrice } from "@/lib/api";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 interface ProductCardProps {

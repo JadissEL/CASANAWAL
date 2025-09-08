@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/ui/navigation";
 import { useCart } from "@/contexts/CartContext";
-import { ProductVariant } from "@shared/api";
+import { ProductVariant } from "@/lib/api";
 import { RefetchIndicator } from "@/components/shared/LoadingSpinner";
 import { useHomePage } from "./index/home-hooks";
 import { HomeHero } from "./index/home-hero";

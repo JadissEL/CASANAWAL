@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { ProductCard } from "@/components/ui/product-card";
 import { itemVariants, containerVariants } from "./menu-animations";
-import { Product, ProductVariant } from "@shared/api";
+import { Product, ProductVariant } from "@/lib/api";
 
 interface MenuGridProps {
   items: Product[];

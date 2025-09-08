@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useMenuData, searchMenuItems } from "@/hooks/useProducts";
-import { Product } from "@shared/api";
+import { Product } from "@/lib/api";
 
 export const useMenuPage = () => {
   const [searchQuery, setSearchQuery] = useState("");

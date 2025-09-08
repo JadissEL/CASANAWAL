@@ -6,7 +6,7 @@ import type {
   MenuResponse,
   MenuStatsResponse,
   SearchSuggestionsResponse
-} from '@shared/api';
+} from '@/lib/api';
 import { apiGet } from '@/lib/utils/api/core';
 
 // Enhanced menu data hook with stable data

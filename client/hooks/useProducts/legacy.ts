@@ -1,6 +1,6 @@
 import type { MenuFilters, MenuItem, MenuCategory } from './types';
 import { useMenuData } from './core';
-import type { MenuResponse } from '@shared/api';
+import type { MenuResponse } from '@/lib/api';
 
 // Legacy hook for backward compatibility
 export function useLegacyMenuData(filters: MenuFilters = {}) {

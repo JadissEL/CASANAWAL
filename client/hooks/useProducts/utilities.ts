@@ -1,4 +1,4 @@
-import type { Product } from '@shared/api';
+import type { Product } from '@/lib/api';
 
 // Utility functions
 export function calculatePortionPrice(basePrice: number, variant: { price_modifier: number }): number {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/ui/navigation";
 import { useCart } from "@/contexts/CartContext";
-import { ProductVariant } from "@shared/api";
+import { ProductVariant } from "@/lib/api";
 import { DataLoadingState } from "@/components/shared/LoadingSpinner";
 import { containerVariants } from "./menu/menu-animations";
 import { useMenuPage } from "./menu/menu-hooks";

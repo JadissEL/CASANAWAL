@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ui/product-card";
 import { DataLoadingState, RefetchIndicator } from "@/components/shared/LoadingSpinner";
 import { ArrowRight } from "lucide-react";
-import { Product, ProductVariant } from "@shared/api";
+import { Product, ProductVariant } from "@/lib/api";
 
 interface HomeFeaturedProps {
   products: Product[];

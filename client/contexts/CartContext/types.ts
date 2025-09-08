@@ -1,4 +1,4 @@
-import { ProductVariant } from '@shared/api';
+import { ProductVariant } from '@/lib/api';
 
 export interface CartItem {
   id: string;

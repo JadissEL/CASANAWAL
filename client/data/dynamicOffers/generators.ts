@@ -1,4 +1,4 @@
-import type { Product, Category } from '@shared/api';
+import type { Product, Category } from '@/lib/api';
 import type { MenuItem, MenuCategory, DynamicOffer } from './types';
 import { BUNDLE_CONFIGS, SEASONAL_OFFERS } from './configs';
 import {
