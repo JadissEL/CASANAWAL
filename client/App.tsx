@@ -108,4 +108,5 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Export App component for main.tsx
+export default App;
