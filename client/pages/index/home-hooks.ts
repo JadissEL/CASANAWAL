@@ -40,7 +40,7 @@ export const useHomePage = () => {
     const fetchFeaturedOffers = async () => {
       try {
         setOffersLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/offers/featured`);
+        const response = await fetch('/api/offers/featured');
         if (response.ok) {
           const data = await response.json();
           setOffers(data.offers || []);

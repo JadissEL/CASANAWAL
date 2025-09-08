@@ -20,7 +20,7 @@ export const DashboardOffers = ({ onMessage }: DashboardOffersProps) => {
 
   const fetchOffers = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/admin/offers`);
+      const response = await fetch('/api/admin/offers');
       if (response.ok) {
         const data = await response.json();
         setOffers(data.offers || []);
@@ -37,7 +37,7 @@ export const DashboardOffers = ({ onMessage }: DashboardOffersProps) => {
 
   const toggleOfferStatus = async (offerId: string, isActive: boolean) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/admin/offers/${offerId}/status`, {
+      const response = await fetch(`/api/admin/offers/${offerId}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ is_active: isActive })
@@ -62,7 +62,7 @@ export const DashboardOffers = ({ onMessage }: DashboardOffersProps) => {
 
   const toggleFeaturedStatus = async (offerId: string, isFeatured: boolean) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/admin/offers/${offerId}/featured`, {
+      const response = await fetch(`/api/admin/offers/${offerId}/featured`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ is_featured: isFeatured })
@@ -89,7 +89,7 @@ export const DashboardOffers = ({ onMessage }: DashboardOffersProps) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/admin/offers/${offerId}`, {
+      const response = await fetch(`/api/admin/offers/${offerId}`, {
         method: 'DELETE'
       });
 

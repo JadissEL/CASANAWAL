@@ -68,7 +68,7 @@ export const useOffers = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || '/api'}/admin/offers`);
+      const response = await fetch('/api/admin/offers');
       if (response.ok) {
         const data = await response.json();
         const dbOffers = data.offers || [];
